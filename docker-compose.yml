@@ -1,0 +1,109 @@
+version: '3.8'
+
+services:
+  sqli1-1:
+    build:
+      context: .
+      dockerfile: Dockerfile.php
+    ports:
+      - "8001:80"
+    volumes:
+      - ./sqli1-1:/var/www/html
+    depends_on:
+      - mysql
+
+  sqli1-2:
+    build:
+      context: .
+      dockerfile: Dockerfile.php
+    ports:
+      - "8002:80"
+    volumes:
+      - ./sqli1-2:/var/www/html
+    depends_on:
+      - mysql
+
+  sqli2-1:
+    build:
+      context: .
+      dockerfile: Dockerfile.php
+    ports:
+      - "8003:80"
+    volumes:
+      - ./sqli2-1:/var/www/html
+    depends_on:
+      - mysql
+
+  sqli2-2:
+    build:
+      context: .
+      dockerfile: Dockerfile.php
+    ports:
+      - "8004:80"
+    volumes:
+      - ./sqli2-2:/var/www/html
+    depends_on:
+      - mysql
+
+  sqli3-1:
+    build:
+      context: .
+      dockerfile: Dockerfile.php
+    ports:
+      - "8005:80"
+    volumes:
+      - ./sqli3-1:/var/www/html
+    depends_on:
+      - mysql
+
+  sqli3-2:
+    build:
+      context: .
+      dockerfile: Dockerfile.php
+    ports:
+      - "8006:80"
+    volumes:
+      - ./sqli3-2:/var/www/html
+    depends_on:
+      - mysql
+
+  sqli4-1:
+    build:
+      context: .
+      dockerfile: Dockerfile.php
+    ports:
+      - "8007:80"
+    volumes:
+      - ./sqli4-1:/var/www/html
+    depends_on:
+      - mysql
+
+  sqli4-2:
+    build:
+      context: .
+      dockerfile: Dockerfile.php
+    ports:
+      - "8008:80"
+    volumes:
+      - ./sqli4-2:/var/www/html
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: book4b
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./table_mysql.sql:/docker-entrypoint-initdb.d/table_mysql.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-ppassword"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  mysql-data:
